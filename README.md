@@ -32,6 +32,9 @@ pip install --upgrade pip setuptools
 pip install -e .
 ```
 
+6. Bikin database menggunakan pgAdmin4. Nama databasenya ```job_portal_system```
+![pgAdmin Setup](./docs/images/pgAdmin.png)
+
 ## Run server di local
 
 ### Frontend
