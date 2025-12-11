@@ -68,6 +68,7 @@ def create_job(request):
     
     job = Job(employer_id=user_id, title=title, description=description, requirements=requirements, salary=salary, location=location, type=type_)
     request.dbsession.add(job)
+    request.dbsession.flush()
     return {'message': 'Job created', 'job_id': job.id}
 
 @view_config(route_name='job_detail', request_method='PUT', renderer='json')

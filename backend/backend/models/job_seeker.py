@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Text, ForeignKey
+from sqlalchemy.orm import relationship
 
 from .meta import Base
 
@@ -11,3 +12,5 @@ class JobSeeker(Base):
     skills = Column(Text)
     experience = Column(Text)
     cv_url = Column(String(255))
+    
+    user = relationship('User', backref='job_seeker')

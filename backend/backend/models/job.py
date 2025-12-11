@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Text, ForeignKey
+from sqlalchemy.orm import relationship
 
 from .meta import Base
 
@@ -14,3 +15,5 @@ class Job(Base):
     salary = Column(String(100))
     location = Column(String(255))
     type = Column(String(50))
+    
+    employer = relationship('User', backref='jobs')

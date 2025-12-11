@@ -30,6 +30,7 @@ def apply_job(request):
     
     app = Application(job_id=job_id, seeker_id=seeker.id, status='pending')
     request.dbsession.add(app)
+    request.dbsession.flush()
     return {'message': 'Applied', 'application_id': app.id}
 
 @view_config(route_name='my_applications', request_method='GET', renderer='json')
