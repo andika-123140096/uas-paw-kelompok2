@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
-import { Briefcase, Building2, DollarSign, MapPin, FileText, Tag } from 'lucide-react';
+import React, { useState } from "react";
+import {
+  Briefcase,
+  Building2,
+  DollarSign,
+  MapPin,
+  FileText,
+  Tag,
+} from "lucide-react";
 
 const PostJobPage = ({ onCreateJob }) => {
-  const [title, setTitle] = useState('');
-  const [companyName, setCompanyName] = useState('');
-  const [description, setDescription] = useState('');
-  const [requirements, setRequirements] = useState('');
-  const [salary, setSalary] = useState('');
-  const [location, setLocation] = useState('');
-  const [type, setType] = useState('Full-time');
+  const [title, setTitle] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [description, setDescription] = useState("");
+  const [requirements, setRequirements] = useState("");
+  const [salary, setSalary] = useState("");
+  const [location, setLocation] = useState("");
+  const [type, setType] = useState("Full-time");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,36 +23,47 @@ const PostJobPage = ({ onCreateJob }) => {
       title,
       company_name: companyName,
       description,
-      requirements: requirements.split(',').map(r => r.trim()).filter(r => r),
+      requirements: requirements
+        .split(",")
+        .map((r) => r.trim())
+        .filter((r) => r),
       salary,
       location,
       type,
     });
-    
-    setTitle('');
-    setCompanyName('');
-    setDescription('');
-    setRequirements('');
-    setSalary('');
-    setLocation('');
-    setType('Full-time');
+
+    setTitle("");
+    setCompanyName("");
+    setDescription("");
+    setRequirements("");
+    setSalary("");
+    setLocation("");
+    setType("Full-time");
   };
 
   return (
     <div className="min-h-screen bg-black py-24">
       {/* Grid Background */}
       <div className="absolute inset-0 grid-pattern opacity-20"></div>
-      
+
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-5xl md:text-6xl font-black text-white mb-4 text-center">
-          Post a <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Job</span>
+          Post a{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
+            Job
+          </span>
         </h1>
-        <p className="text-gray-400 text-center mb-12 text-lg">Fill in the details below</p>
-        
+        <p className="text-gray-400 text-center mb-12 text-lg">
+          Fill in the details below
+        </p>
+
         <div className="relative group">
           <div className="absolute -inset-1 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-3xl opacity-30 blur-xl"></div>
-          
-          <form onSubmit={handleSubmit} className="relative glass rounded-3xl p-10 border border-white/10 space-y-6">
+
+          <form
+            onSubmit={handleSubmit}
+            className="relative glass rounded-3xl p-10 border border-white/10 space-y-6"
+          >
             {/* Title */}
             <div>
               <label className="block text-gray-400 text-sm font-bold mb-3 flex items-center gap-2">
@@ -107,7 +125,9 @@ const PostJobPage = ({ onCreateJob }) => {
                 placeholder="e.g. React, TypeScript, Node.js (comma separated)"
                 required
               />
-              <p className="text-gray-500 text-xs mt-2">Separate each skill with a comma</p>
+              <p className="text-gray-500 text-xs mt-2">
+                Separate each skill with a comma
+              </p>
             </div>
 
             {/* Salary & Location */}

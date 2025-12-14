@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Filter, X, Search, MapPin } from 'lucide-react';
-import JobCard from '../components/jobs/JobCard';
+import React, { useState } from "react";
+import { Filter, X, Search, MapPin } from "lucide-react";
+import JobCard from "../components/jobs/JobCard";
 
-const JobsPage = ({ 
-  jobs, 
-  currentUser, 
-  savedJobs, 
+const JobsPage = ({
+  jobs,
+  currentUser,
+  savedJobs,
   applications,
   searchQuery,
   setSearchQuery,
@@ -14,54 +14,62 @@ const JobsPage = ({
   typeFilter,
   setTypeFilter,
   onToggleSave,
-  onViewDetails
+  onViewDetails,
 }) => {
   const [showFilters, setShowFilters] = useState(false);
 
-  const filteredJobs = jobs.filter(job => {
-    const matchesSearch = job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         job.company_name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesLocation = !locationFilter || job.location.toLowerCase().includes(locationFilter.toLowerCase());
+  const filteredJobs = jobs.filter((job) => {
+    const matchesSearch =
+      job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.company_name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesLocation =
+      !locationFilter ||
+      job.location.toLowerCase().includes(locationFilter.toLowerCase());
     const matchesType = !typeFilter || job.type === typeFilter;
     return matchesSearch && matchesLocation && matchesType;
   });
 
   const clearFilters = () => {
-    setSearchQuery('');
-    setLocationFilter('');
-    setTypeFilter('');
+    setSearchQuery("");
+    setLocationFilter("");
+    setTypeFilter("");
   };
 
   return (
     <div className="min-h-screen bg-black py-24">
       {/* Grid Background */}
       <div className="absolute inset-0 grid-pattern opacity-20"></div>
-      
+
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
           <div>
             <h1 className="text-6xl font-black text-white mb-3">
-              Browse <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Jobs</span>
+              Browse{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
+                Jobs
+              </span>
             </h1>
-            <p className="text-gray-400 text-lg">Discover your next opportunity</p>
+            <p className="text-gray-400 text-lg">
+              Discover your next opportunity
+            </p>
           </div>
-          
+
           <button
             onClick={() => setShowFilters(!showFilters)}
             className="md:hidden px-6 py-3 glass border border-white/10 text-white rounded-xl flex items-center gap-2 font-bold"
           >
             <Filter size={20} />
-            {showFilters ? 'Hide' : 'Show'} Filters
+            {showFilters ? "Hide" : "Show"} Filters
           </button>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Filters Sidebar */}
-          <div className={`lg:block ${showFilters ? 'block' : 'hidden'}`}>
+          <div className={`lg:block ${showFilters ? "block" : "hidden"}`}>
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl opacity-20 blur-xl"></div>
-              
+
               <div className="relative glass rounded-3xl p-8 border border-white/10 sticky top-28">
                 <div className="flex items-center justify-between mb-8">
                   <h2 className="text-2xl font-black text-white">Filters</h2>
@@ -74,7 +82,7 @@ const JobsPage = ({
                     </button>
                   )}
                 </div>
-                
+
                 <div className="space-y-6">
                   {/* Search */}
                   <div>
@@ -82,7 +90,10 @@ const JobsPage = ({
                       Keywords
                     </label>
                     <div className="relative">
-                      <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                      <Search
+                        className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+                        size={18}
+                      />
                       <input
                         type="text"
                         placeholder="Job title..."
@@ -99,7 +110,10 @@ const JobsPage = ({
                       Location
                     </label>
                     <div className="relative">
-                      <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                      <MapPin
+                        className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+                        size={18}
+                      />
                       <input
                         type="text"
                         placeholder="City..."
@@ -148,10 +162,13 @@ const JobsPage = ({
             {/* Results Count */}
             <div className="mb-6 flex items-center justify-between">
               <div className="text-gray-400 font-medium">
-                <span className="text-white font-bold text-xl">{filteredJobs.length}</span> jobs found
+                <span className="text-white font-bold text-xl">
+                  {filteredJobs.length}
+                </span>{" "}
+                jobs found
               </div>
             </div>
-            
+
             {/* Jobs */}
             {filteredJobs.length === 0 ? (
               <div className="relative group">
@@ -160,7 +177,9 @@ const JobsPage = ({
                   <div className="w-24 h-24 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 opacity-50">
                     <Search size={48} className="text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-3">No jobs found</h3>
+                  <h3 className="text-2xl font-bold text-white mb-3">
+                    No jobs found
+                  </h3>
                   <p className="text-gray-400 mb-6">
                     Try adjusting your filters
                   </p>
@@ -174,9 +193,9 @@ const JobsPage = ({
               </div>
             ) : (
               <div className="grid grid-cols-1 gap-6">
-                {filteredJobs.map(job => (
-                  <JobCard 
-                    key={job.id} 
+                {filteredJobs.map((job) => (
+                  <JobCard
+                    key={job.id}
                     job={job}
                     currentUser={currentUser}
                     savedJobs={savedJobs}

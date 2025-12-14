@@ -1,5 +1,14 @@
-import React, { useState } from 'react';
-import { Briefcase, Plus, LogOut, Menu, X, Bookmark, FileText, Home } from 'lucide-react';
+import React, { useState } from "react";
+import {
+  Briefcase,
+  Plus,
+  LogOut,
+  Menu,
+  X,
+  Bookmark,
+  FileText,
+  Home,
+} from "lucide-react";
 
 const Navbar = ({ currentUser, onLogout, onNavigate }) => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -14,9 +23,9 @@ const Navbar = ({ currentUser, onLogout, onNavigate }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <div 
-            className="flex items-center gap-3 cursor-pointer group" 
-            onClick={() => handleNavigation('home')}
+          <div
+            className="flex items-center gap-3 cursor-pointer group"
+            onClick={() => handleNavigation("home")}
           >
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl blur-md opacity-75 group-hover:opacity-100 transition-opacity"></div>
@@ -31,34 +40,40 @@ const Navbar = ({ currentUser, onLogout, onNavigate }) => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-2">
-            <NavLink onClick={() => handleNavigation('home')} icon={Home}>
+            <NavLink onClick={() => handleNavigation("home")} icon={Home}>
               Home
             </NavLink>
-            
-            <NavLink onClick={() => handleNavigation('jobs')} icon={Briefcase}>
+
+            <NavLink onClick={() => handleNavigation("jobs")} icon={Briefcase}>
               Jobs
             </NavLink>
-            
+
             {currentUser ? (
               <>
-                <NavLink onClick={() => handleNavigation('saved')} icon={Bookmark}>
+                <NavLink
+                  onClick={() => handleNavigation("saved")}
+                  icon={Bookmark}
+                >
                   Saved
                 </NavLink>
-                
-                <NavLink onClick={() => handleNavigation('applications')} icon={FileText}>
+
+                <NavLink
+                  onClick={() => handleNavigation("applications")}
+                  icon={FileText}
+                >
                   Applications
                 </NavLink>
-                
-                {currentUser.role === 'employer' && (
-                  <button 
-                    onClick={() => handleNavigation('post-job')} 
+
+                {currentUser.role === "employer" && (
+                  <button
+                    onClick={() => handleNavigation("post-job")}
                     className="ml-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-bold transition-all hover:shadow-2xl hover:shadow-indigo-500/50 transform hover:scale-105 flex items-center gap-2 btn-shine"
                   >
                     <Plus size={18} />
                     Post Job
                   </button>
                 )}
-                
+
                 {/* User Profile */}
                 <div className="flex items-center gap-3 ml-4 pl-4 border-l border-white/10">
                   <div className="relative group/avatar">
@@ -67,14 +82,18 @@ const Navbar = ({ currentUser, onLogout, onNavigate }) => {
                       {currentUser.name[0].toUpperCase()}
                     </div>
                   </div>
-                  
+
                   <div className="hidden lg:block">
-                    <div className="text-white font-bold text-sm">{currentUser.name}</div>
-                    <div className="text-gray-400 text-xs capitalize">{currentUser.role}</div>
+                    <div className="text-white font-bold text-sm">
+                      {currentUser.name}
+                    </div>
+                    <div className="text-gray-400 text-xs capitalize">
+                      {currentUser.role}
+                    </div>
                   </div>
-                  
-                  <button 
-                    onClick={onLogout} 
+
+                  <button
+                    onClick={onLogout}
                     className="text-gray-400 hover:text-red-400 transition-colors p-2 hover:bg-red-500/10 rounded-xl"
                     title="Logout"
                   >
@@ -84,14 +103,14 @@ const Navbar = ({ currentUser, onLogout, onNavigate }) => {
               </>
             ) : (
               <div className="flex items-center gap-3 ml-4">
-                <button 
-                  onClick={() => handleNavigation('login')} 
+                <button
+                  onClick={() => handleNavigation("login")}
                   className="px-6 py-3 glass border border-white/10 text-white rounded-xl font-semibold hover:border-white/20 transition-all"
                 >
                   Login
                 </button>
-                <button 
-                  onClick={() => handleNavigation('register')} 
+                <button
+                  onClick={() => handleNavigation("register")}
                   className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-bold hover:shadow-2xl hover:shadow-indigo-500/50 transition-all transform hover:scale-105 btn-shine"
                 >
                   Sign Up
@@ -101,8 +120,8 @@ const Navbar = ({ currentUser, onLogout, onNavigate }) => {
           </div>
 
           {/* Mobile Menu Button */}
-          <button 
-            onClick={() => setShowMobileMenu(!showMobileMenu)} 
+          <button
+            onClick={() => setShowMobileMenu(!showMobileMenu)}
             className="md:hidden text-white p-3 glass border border-white/10 rounded-xl transition-all"
           >
             {showMobileMenu ? <X size={20} /> : <Menu size={20} />}
@@ -113,48 +132,64 @@ const Navbar = ({ currentUser, onLogout, onNavigate }) => {
         {showMobileMenu && (
           <div className="md:hidden py-6 border-t border-white/10 animate-fadeIn">
             <div className="space-y-2">
-              <MobileNavLink onClick={() => handleNavigation('home')} icon={Home}>
+              <MobileNavLink
+                onClick={() => handleNavigation("home")}
+                icon={Home}
+              >
                 Home
               </MobileNavLink>
-              
-              <MobileNavLink onClick={() => handleNavigation('jobs')} icon={Briefcase}>
+
+              <MobileNavLink
+                onClick={() => handleNavigation("jobs")}
+                icon={Briefcase}
+              >
                 Jobs
               </MobileNavLink>
-              
+
               {currentUser ? (
                 <>
-                  <MobileNavLink onClick={() => handleNavigation('saved')} icon={Bookmark}>
+                  <MobileNavLink
+                    onClick={() => handleNavigation("saved")}
+                    icon={Bookmark}
+                  >
                     Saved Jobs
                   </MobileNavLink>
-                  
-                  <MobileNavLink onClick={() => handleNavigation('applications')} icon={FileText}>
+
+                  <MobileNavLink
+                    onClick={() => handleNavigation("applications")}
+                    icon={FileText}
+                  >
                     Applications
                   </MobileNavLink>
-                  
-                  {currentUser.role === 'employer' && (
-                    <button 
-                      onClick={() => handleNavigation('post-job')} 
+
+                  {currentUser.role === "employer" && (
+                    <button
+                      onClick={() => handleNavigation("post-job")}
                       className="flex items-center gap-3 w-full text-left px-5 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-bold mt-2"
                     >
                       <Plus size={20} />
                       Post Job
                     </button>
                   )}
-                  
+
                   <div className="my-4 border-t border-white/10"></div>
-                  
+
                   <div className="px-5 py-3 flex items-center gap-3">
                     <div className="w-12 h-12 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white font-black shadow-xl">
                       {currentUser.name[0].toUpperCase()}
                     </div>
                     <div>
-                      <div className="text-white font-bold">{currentUser.name}</div>
-                      <div className="text-gray-400 text-sm capitalize">{currentUser.role}</div>
+                      <div className="text-white font-bold">
+                        {currentUser.name}
+                      </div>
+                      <div className="text-gray-400 text-sm capitalize">
+                        {currentUser.role}
+                      </div>
                     </div>
                   </div>
-                  
-                  <button 
-                    onClick={onLogout} 
+
+                  <button
+                    onClick={onLogout}
                     className="flex items-center gap-3 w-full text-left px-5 py-3 text-red-400 hover:bg-red-500/10 rounded-xl transition-all font-semibold"
                   >
                     <LogOut size={20} />
@@ -163,14 +198,14 @@ const Navbar = ({ currentUser, onLogout, onNavigate }) => {
                 </>
               ) : (
                 <>
-                  <button 
-                    onClick={() => handleNavigation('login')} 
+                  <button
+                    onClick={() => handleNavigation("login")}
                     className="w-full text-left px-5 py-3 glass border border-white/10 text-white rounded-xl font-semibold"
                   >
                     Login
                   </button>
-                  <button 
-                    onClick={() => handleNavigation('register')} 
+                  <button
+                    onClick={() => handleNavigation("register")}
                     className="w-full text-left px-5 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-bold mt-2"
                   >
                     Sign Up

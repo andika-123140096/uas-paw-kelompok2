@@ -1,15 +1,15 @@
 // API Base URL - Ganti dengan URL backend temanmu
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = "http://localhost:5000/api";
 
 // Helper function untuk fetch dengan error handling
 const fetchAPI = async (endpoint, options = {}) => {
-  const token = localStorage.getItem('token');
-  
+  const token = localStorage.getItem("token");
+
   const config = {
     ...options,
     headers: {
-      'Content-Type': 'application/json',
-      ...(token && { 'Authorization': `Bearer ${token}` }),
+      "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }),
       ...options.headers,
     },
   };
@@ -17,14 +17,14 @@ const fetchAPI = async (endpoint, options = {}) => {
   try {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
     const data = await response.json();
-    
+
     if (!response.ok) {
-      throw new Error(data.message || 'Something went wrong');
+      throw new Error(data.message || "Something went wrong");
     }
-    
+
     return data;
   } catch (error) {
-    console.error('API Error:', error);
+    console.error("API Error:", error);
     throw error;
   }
 };
@@ -32,15 +32,15 @@ const fetchAPI = async (endpoint, options = {}) => {
 // Auth API
 export const authAPI = {
   register: async (userData) => {
-    return fetchAPI('/auth/register', {
-      method: 'POST',
+    return fetchAPI("/auth/register", {
+      method: "POST",
       body: JSON.stringify(userData),
     });
   },
 
   login: async (credentials) => {
-    return fetchAPI('/auth/login', {
-      method: 'POST',
+    return fetchAPI("/auth/login", {
+      method: "POST",
       body: JSON.stringify(credentials),
     });
   },
@@ -50,7 +50,7 @@ export const authAPI = {
 export const jobsAPI = {
   getAllJobs: async (params = {}) => {
     const queryString = new URLSearchParams(params).toString();
-    return fetchAPI(`/jobs${queryString ? `?${queryString}` : ''}`);
+    return fetchAPI(`/jobs${queryString ? `?${queryString}` : ""}`);
   },
 
   getJobById: async (id) => {
@@ -58,22 +58,22 @@ export const jobsAPI = {
   },
 
   createJob: async (jobData) => {
-    return fetchAPI('/jobs', {
-      method: 'POST',
+    return fetchAPI("/jobs", {
+      method: "POST",
       body: JSON.stringify(jobData),
     });
   },
 
   updateJob: async (id, jobData) => {
     return fetchAPI(`/jobs/${id}`, {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(jobData),
     });
   },
 
   deleteJob: async (id) => {
     return fetchAPI(`/jobs/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
   },
 };
@@ -81,14 +81,14 @@ export const jobsAPI = {
 // Applications API
 export const applicationsAPI = {
   apply: async (applicationData) => {
-    return fetchAPI('/applications', {
-      method: 'POST',
+    return fetchAPI("/applications", {
+      method: "POST",
       body: JSON.stringify(applicationData),
     });
   },
 
   getMyApplications: async () => {
-    return fetchAPI('/applications/my');
+    return fetchAPI("/applications/my");
   },
 
   getApplicationsForJob: async (jobId) => {
@@ -97,7 +97,7 @@ export const applicationsAPI = {
 
   updateApplicationStatus: async (id, status) => {
     return fetchAPI(`/applications/${id}/status`, {
-      method: 'PATCH',
+      method: "PATCH",
       body: JSON.stringify({ status }),
     });
   },
@@ -106,12 +106,12 @@ export const applicationsAPI = {
 // Profile API
 export const profileAPI = {
   getProfile: async () => {
-    return fetchAPI('/profile');
+    return fetchAPI("/profile");
   },
 
   updateProfile: async (profileData) => {
-    return fetchAPI('/profile', {
-      method: 'PUT',
+    return fetchAPI("/profile", {
+      method: "PUT",
       body: JSON.stringify(profileData),
     });
   },
