@@ -28,7 +28,7 @@ const JobCard = ({
       onClick={() => onViewDetails(job)}
     >
       {/* Glow Effect */}
-      <div className="absolute -inset-1 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-3xl opacity-0 blur-xl group-hover:opacity-40 transition-opacity"></div>
+      <div className="absolute -inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-3xl opacity-0 blur-xl group-hover:opacity-40 transition-opacity"></div>
 
       {/* Card */}
       <div className="relative glass rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-8 border border-white/10 group-hover:border-white/20 transition-all">

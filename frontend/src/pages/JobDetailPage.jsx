@@ -27,11 +27,14 @@ const JobDetailPage = ({
   };
 
   return (
-    <div className="min-h-screen bg-black py-24">
+    <div className="relative min-h-screen bg-black py-24 flex flex-col items-center">
       {/* Grid Background */}
       <div className="absolute inset-0 grid-pattern opacity-20"></div>
 
-      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div
+        className="relative w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8"
+        style={{ marginTop: "6rem" }}
+      >
         {/* Back Button */}
         <button
           onClick={() => onNavigate("jobs")}
@@ -45,7 +48,7 @@ const JobDetailPage = ({
         <div className="relative group">
           <div className="absolute -inset-1 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-3xl opacity-30 blur-2xl"></div>
 
-          <div className="relative glass rounded-3xl p-10 border border-white/10">
+          <div className="relative glass rounded-3xl p-16 border border-white/10">
             {/* Header */}
             <div className="flex items-start justify-between mb-8">
               <div className="flex gap-6 flex-1">
