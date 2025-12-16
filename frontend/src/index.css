@@ -254,3 +254,105 @@ html {
     linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
   background-size: 50px 50px;
 }
+
+/* Additional utility classes for better spacing */
+.container-safe {
+  max-width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-safe {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-safe {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Prevent text overflow and ensure readability */
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Better focus states */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+/* Smooth transitions for all interactive elements */
+button,
+a,
+input,
+select,
+textarea {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Fix for mobile tap highlight */
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Better mobile touch targets */
+@media (max-width: 640px) {
+  button,
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Prevent layout shifts */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure proper stacking context */
+.relative {
+  position: relative;
+}
+
+/* Prevent overflow issues */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Better spacing utilities */
+.space-y-safe > * + * {
+  margin-top: 1rem;
+}
+
+/* Ensure text doesn't overflow */
+.text-wrap {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Fix for input fields on mobile */
+input,
+textarea,
+select {
+  font-size: 16px !important; /* Prevents zoom on iOS */
+}
+
+@media (min-width: 768px) {
+  input,
+  textarea,
+  select {
+    font-size: inherit !important;
+  }
+}

@@ -52,7 +52,6 @@ const RegisterPage = ({ onRegister, onNavigate }) => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="w-full pl-12 pr-4 py-4 glass border border-white/10 text-white rounded-xl focus:border-purple-500 focus:outline-none transition-all placeholder:text-gray-600 font-medium"
-                    placeholder="John Doe"
                     required
                   />
                 </div>
@@ -73,7 +72,6 @@ const RegisterPage = ({ onRegister, onNavigate }) => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full pl-12 pr-4 py-4 glass border border-white/10 text-white rounded-xl focus:border-purple-500 focus:outline-none transition-all placeholder:text-gray-600 font-medium"
-                    placeholder="your@email.com"
                     required
                   />
                 </div>
@@ -94,7 +92,6 @@ const RegisterPage = ({ onRegister, onNavigate }) => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full pl-12 pr-4 py-4 glass border border-white/10 text-white rounded-xl focus:border-purple-500 focus:outline-none transition-all placeholder:text-gray-600 font-medium"
-                    placeholder="••••••••"
                     required
                     minLength={6}
                   />
