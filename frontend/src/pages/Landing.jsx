@@ -68,11 +68,11 @@ export default function Landing(){
           </div>
         </div>
       </section>
-      <section className="py-20 bg-gradient-to-r from-gray-50 to-white dark:from-gray-950 dark:to-gray-900 relative">
+      <section className="py-12 bg-gradient-to-r from-gray-50 to-white dark:from-gray-950 dark:to-gray-900 relative">
         <div className="absolute inset-0 bg-gradient-radial from-blue-50/30 via-transparent to-purple-50/30 dark:from-blue-900/5 dark:via-transparent dark:to-purple-900/5"></div>
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16 animate-slide-up">
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-4">Mengapa Memilih Kami?</h2>
+          <div className="text-center mb-12 animate-slide-up">
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-4 leading-tight pb-2">Mengapa Memilih Kami?</h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
               Platform modern dengan fitur-fitur canggih untuk membantu Anda menemukan pekerjaan impian.
             </p>
