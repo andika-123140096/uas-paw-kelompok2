@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 export default function Landing(){
   return (
     <div className="w-full">
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 py-24 lg:py-32 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 pt-24 lg:pt-32 pb-12 lg:pb-16 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-radial from-transparent via-white/20 to-transparent dark:from-transparent dark:via-gray-800/20 dark:to-transparent"></div>
         <div className="absolute top-20 left-10 w-72 h-72 bg-blue-200/30 dark:bg-blue-900/10 rounded-full blur-3xl animate-float"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-indigo-200/20 dark:bg-indigo-900/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
