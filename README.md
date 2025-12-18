@@ -1,5 +1,10 @@
 # UAS PAW Kelompok 2
-Anggota Kelompok
+Anggota Kelompok :
+- Ahmad Aufamahdi Salam (123140092)
+- Andika Dinata (123140096)
+- Ibrahim Budi Satria (123140097)
+- Abel Fortino (123140111)
+- Keira Lakeisha Fachra Fuady (123140142)
 
 
 ## Setup project di local.
