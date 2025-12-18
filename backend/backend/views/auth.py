@@ -1,7 +1,7 @@
 import bcrypt
 import jwt
 from datetime import datetime, timedelta
-from pyramid.view import view_config
+from pyramid.view import view_config, forbidden_view_config
 from sqlalchemy.exc import IntegrityError
 from ..models import User, JobSeeker
 
@@ -80,3 +80,7 @@ def get_me(request):
     if not user:
         return {'error': 'User not found'}, 404
     return {'id': user.id, 'name': user.name, 'email': user.email, 'role': user.role}
+
+@forbidden_view_config(renderer='json')
+def forbidden(request):
+    return {'error': 'Forbidden'}, 403

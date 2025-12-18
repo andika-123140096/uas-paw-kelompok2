@@ -117,6 +117,13 @@ def includeme(config):
     session_factory = get_session_factory(dbengine)
     config.registry['dbsession_factory'] = session_factory
 
+    # Register models in the registry for easy access
+    config.registry['User'] = User
+    config.registry['Job'] = Job
+    config.registry['JobSeeker'] = JobSeeker
+    config.registry['Application'] = Application
+    config.registry['MyModel'] = MyModel
+
     # make request.dbsession available for use in Pyramid
     def dbsession(request):
         # hook to share the dbsession fixture in testing

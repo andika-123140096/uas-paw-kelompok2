@@ -1,5 +1,7 @@
 from pyramid.config import Configurator
 
+from .security import SecurityPolicy
+
 
 # Module-level CORS tween factory so it is available as ``backend.cors_tween_factory``
 # (dotted-name importable). This avoids import-resolution issues when running
@@ -37,7 +39,7 @@ def cors_tween_factory(handler, registry):
 
 
 def main(global_config, **settings):
-    with Configurator(settings=settings) as config:
+    with Configurator(settings=settings, root_factory='.resources.Root') as config:
         config.include('pyramid_jinja2')
         config.include('.routes')
         config.include('.models')
@@ -45,6 +47,12 @@ def main(global_config, **settings):
         # Register CORS tween to handle preflight and add CORS headers
         # Use a dotted name pointing to the module-level function so Pyramid can import it
         config.add_tween('backend.cors_tween_factory')
+
+        config.set_security_policy(
+            SecurityPolicy(
+                secret=settings.get('jwt.secret', 'your_secret_key'),
+            ),
+        )
 
         config.scan()
     return config.make_wsgi_app()

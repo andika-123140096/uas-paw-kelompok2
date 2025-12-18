@@ -1,7 +1,6 @@
 from pyramid.view import view_config
 from sqlalchemy.orm import joinedload
 from ..models import Job, User
-from .auth import get_user_id
 
 @view_config(route_name='jobs', request_method='GET', renderer='json')
 def list_jobs(request):
@@ -46,14 +45,11 @@ def get_job(request):
 def create_job_get(request):
     return {'message': 'Use POST to create job'}
 
-@view_config(route_name='create_job', request_method='POST', renderer='json')
+@view_config(route_name='create_job', request_method='POST', renderer='json', permission='create_job')
 def create_job(request):
-    user_id = get_user_id(request)
+    user_id = request.authenticated_userid
     if not user_id:
         return {'error': 'Unauthorized'}, 401
-    user = request.dbsession.query(User).filter_by(id=user_id).first()
-    if not user or user.role != 'employer':
-        return {'error': 'Forbidden'}, 403
     
     data = request.json_body
     title = data.get('title')
@@ -66,22 +62,19 @@ def create_job(request):
     if not all([title, description, requirements, salary, location, type_]):
         return {'error': 'Missing fields'}, 400
     
-    job = Job(employer_id=user_id, title=title, description=description, requirements=requirements, salary=salary, location=location, type=type_)
+    job = Job(employer_id=int(user_id), title=title, description=description, requirements=requirements, salary=salary, location=location, type=type_)
     request.dbsession.add(job)
     request.dbsession.flush()
     return {'message': 'Job created', 'job_id': job.id}
 
-@view_config(route_name='job_detail', request_method='PUT', renderer='json')
+@view_config(route_name='job_detail', request_method='PUT', renderer='json', permission='edit_job')
 def update_job(request):
-    user_id = get_user_id(request)
+    user_id = request.authenticated_userid
     if not user_id:
         return {'error': 'Unauthorized'}, 401
-    user = request.dbsession.query(User).filter_by(id=user_id).first()
-    if not user or user.role != 'employer':
-        return {'error': 'Forbidden'}, 403
     
     job_id = int(request.matchdict['id'])
-    job = request.dbsession.query(Job).filter_by(id=job_id, employer_id=user_id).first()
+    job = request.dbsession.query(Job).filter_by(id=job_id, employer_id=int(user_id)).first()
     if not job:
         return {'error': 'Job not found or not yours'}, 404
     
@@ -101,17 +94,14 @@ def update_job(request):
     
     return {'message': 'Job updated'}
 
-@view_config(route_name='job_detail', request_method='DELETE', renderer='json')
+@view_config(route_name='job_detail', request_method='DELETE', renderer='json', permission='delete_job')
 def delete_job(request):
-    user_id = get_user_id(request)
+    user_id = request.authenticated_userid
     if not user_id:
         return {'error': 'Unauthorized'}, 401
-    user = request.dbsession.query(User).filter_by(id=user_id).first()
-    if not user or user.role != 'employer':
-        return {'error': 'Forbidden'}, 403
     
     job_id = int(request.matchdict['id'])
-    job = request.dbsession.query(Job).filter_by(id=job_id, employer_id=user_id).first()
+    job = request.dbsession.query(Job).filter_by(id=job_id, employer_id=int(user_id)).first()
     if not job:
         return {'error': 'Job not found or not yours'}, 404
     

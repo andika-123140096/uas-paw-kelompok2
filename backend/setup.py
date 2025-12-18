@@ -22,7 +22,7 @@ requires = [
     'zope.sqlalchemy',
     'psycopg2',
     'bcrypt',
-    'jwt',
+    'PyJWT',
 ]
 
 tests_require = [
