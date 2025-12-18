@@ -38,9 +38,9 @@ export default function Landing(){
             </form>
           </div>
           <div className="text-center mt-8 animate-slide-up" style={{ animationDelay: '0.4s' }}>
-            <div className="flex flex-wrap justify-center gap-6">
-              <Link to="/jobs" className="text-lg text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-all duration-200 hover:scale-105">
-                Jelajahi Lowongan →
+            <div className="flex flex-wrap justify-center gap-6 items-center">
+              <Link to="/jobs" className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-3 rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105">
+                Jelajahi Lowongan
               </Link>
               <Link to="/create-job" className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-6 py-3 rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105">
                 Pasang Lowongan
