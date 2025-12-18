@@ -1,5 +1,5 @@
 # UAS PAW Kelompok 2
-TODO: Update README.md
+Anggota Kelompok
 
 
 ## Setup project di local.
