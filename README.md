@@ -1,4 +1,4 @@
-# UAS PAW Kelompok 2
+# UAS PAW Kelompok 2 - Digit 4 - Job Portal System
 Anggota Kelompok :
 - Ahmad Aufamahdi Salam (123140092)
 - Andika Dinata (123140096)
