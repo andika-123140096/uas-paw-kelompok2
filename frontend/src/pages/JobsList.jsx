@@ -29,7 +29,6 @@ export default function JobsList() {
 
   return (
     <div className="min-h-screen">
-      {/* Header */}
       <div className="bg-gray-50 dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
           <div className="text-center">
@@ -42,7 +41,6 @@ export default function JobsList() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
-        {/* Search Filters */}
         <div className="bg-gray-50 dark:bg-gray-900 rounded-2xl shadow-lg p-6 mb-8 border border-gray-200 dark:border-gray-800">
           <form onSubmit={search} className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
@@ -105,7 +103,6 @@ export default function JobsList() {
           </form>
         </div>
 
-        {/* Results */}
         {err && (
           <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-6 animate-slide-up">
             {err}

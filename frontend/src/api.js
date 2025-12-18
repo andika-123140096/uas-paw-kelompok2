@@ -20,7 +20,6 @@ async function request(path, options = {}) {
   try { data = text ? JSON.parse(text) : null } catch (e) { data = text }
 
   if (!res.ok) {
-    // Handle unauthorized access
     if (res.status === 401) {
       localStorage.removeItem('token')
       localStorage.removeItem('role')

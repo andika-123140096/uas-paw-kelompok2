@@ -12,14 +12,12 @@ export function useTheme() {
 
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
-    // Initialize theme synchronously to prevent hydration mismatch
     if (typeof window !== 'undefined') {
       try {
         const stored = localStorage.getItem('theme')
         if (stored === 'dark' || stored === 'light') {
           return stored
         }
-        // Check system preference
         const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         return systemPrefersDark ? 'dark' : 'light'
       } catch (e) {
@@ -32,7 +30,6 @@ export function ThemeProvider({ children }) {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    // Apply theme to document on mount
     if (theme === 'dark') {
       document.documentElement.classList.add('dark')
     } else {
@@ -40,10 +37,8 @@ export function ThemeProvider({ children }) {
     }
     setMounted(true)
 
-    // Listen for system theme changes
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
     const handleChange = (e) => {
-      // Only update if no manual preference is stored
       if (!localStorage.getItem('theme')) {
         const newTheme = e.matches ? 'dark' : 'light'
         setTheme(newTheme)
@@ -72,7 +67,6 @@ export function ThemeProvider({ children }) {
     try {
       localStorage.setItem('theme', newTheme)
     } catch (e) {
-      // Ignore localStorage errors
     }
   }
 

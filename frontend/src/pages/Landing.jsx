@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 export default function Landing(){
   return (
     <div className="w-full">
-      {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 py-24 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-radial from-transparent via-white/20 to-transparent dark:from-transparent dark:via-gray-800/20 dark:to-transparent"></div>
         <div className="absolute top-20 left-10 w-72 h-72 bg-blue-200/30 dark:bg-blue-900/10 rounded-full blur-3xl animate-float"></div>
@@ -17,8 +16,6 @@ export default function Landing(){
               Platform pencarian kerja terdepan dengan ribuan lowongan dari perusahaan terbaik. Mulai perjalanan karier Anda hari ini.
             </p>
           </div>
-
-          {/* Search Form */}
           <div className="max-w-4xl mx-auto bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/20 dark:border-gray-700/50 animate-slide-up" style={{ animationDelay: '0.2s' }}>
             <form className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div>
@@ -40,8 +37,6 @@ export default function Landing(){
               </div>
             </form>
           </div>
-
-          {/* Quick Actions */}
           <div className="text-center mt-8 animate-slide-up" style={{ animationDelay: '0.4s' }}>
             <div className="flex flex-wrap justify-center gap-6">
               <Link to="/jobs" className="text-lg text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-all duration-200 hover:scale-105">
@@ -54,8 +49,6 @@ export default function Landing(){
           </div>
         </div>
       </section>
-
-      {/* Stats Section */}
       <section className="py-16 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-radial from-transparent via-white/10 to-transparent dark:from-transparent dark:via-gray-800/10 dark:to-transparent"></div>
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
@@ -75,8 +68,6 @@ export default function Landing(){
           </div>
         </div>
       </section>
-
-      {/* Features Section */}
       <section className="py-20 bg-gradient-to-r from-gray-50 to-white dark:from-gray-950 dark:to-gray-900 relative">
         <div className="absolute inset-0 bg-gradient-radial from-blue-50/30 via-transparent to-purple-50/30 dark:from-blue-900/5 dark:via-transparent dark:to-purple-900/5"></div>
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
@@ -120,8 +111,6 @@ export default function Landing(){
           </div>
         </div>
       </section>
-
-      {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 dark:from-gray-900 dark:via-gray-950 dark:to-black relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-radial from-white/10 via-transparent to-transparent dark:from-gray-800/10 dark:via-transparent dark:to-transparent"></div>
         <div className="absolute top-0 left-0 w-full h-full opacity-20" style={{backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`}}></div>

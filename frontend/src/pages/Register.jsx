@@ -28,10 +28,8 @@ export default function Register() {
     setLoading(true)
 
     try {
-      // Register user
       await register(payload)
 
-      // Auto login after successful registration
       const loginData = await login(payload.email, payload.password)
       if (loginData.token && loginData.role) {
         authLogin(loginData.token, loginData.role)

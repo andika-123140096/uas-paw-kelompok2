@@ -20,6 +20,7 @@ export default function Header() {
             <Link to="/jobs" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Jobs</Link>
             {isAuthenticated && isJobSeeker && <Link to="/my-applications" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">My Applications</Link>}
             {isEmployer && <Link to="/create-job" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Create Job</Link>}
+            {isEmployer && <Link to="/my-jobs" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">My Jobs</Link>}
             {isJobSeeker && <Link to="/profile" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Profile</Link>}
           </nav>
         </div>

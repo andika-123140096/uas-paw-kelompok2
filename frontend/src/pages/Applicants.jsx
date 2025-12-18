@@ -78,12 +78,12 @@ export default function Applicants(){
                       <div className="flex items-center gap-3 mb-3">
                         <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center">
                           <span className="text-blue-600 dark:text-blue-400 font-semibold text-lg">
-                            {(a.user?.name || a.applicant_name || 'U')[0].toUpperCase()}
+                            {(a.seeker_name || 'U')[0].toUpperCase()}
                           </span>
                         </div>
                         <div>
                           <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                            {a.user?.name || a.applicant_name}
+                            {a.seeker_name}
                           </h3>
                           <div className="flex items-center gap-2 mt-1">
                             <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(a.status)}`}>
@@ -94,7 +94,7 @@ export default function Applicants(){
                                a.status === 'rejected' ? 'Ditolak' : a.status}
                             </span>
                             <span className="text-sm text-gray-500 dark:text-gray-400">
-                              Dilamar pada {new Date(a.created_at || Date.now()).toLocaleDateString('id-ID')}
+                              Dilamar pada {new Date(a.applied_date || Date.now()).toLocaleDateString('id-ID')}
                             </span>
                           </div>
                         </div>
@@ -107,16 +107,32 @@ export default function Applicants(){
                         </div>
                       )}
 
-                      {a.user?.skills && (
+                      {a.skills && (
                         <div className="mb-4">
                           <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Keterampilan</h4>
                           <div className="flex flex-wrap gap-2">
-                            {a.user.skills.split(',').map((skill, index) => (
+                            {a.skills.split(',').map((skill, index) => (
                               <span key={index} className="px-3 py-1 bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-400 rounded-full text-sm">
                                 {skill.trim()}
                               </span>
                             ))}
                           </div>
+                        </div>
+                      )}
+
+                      {a.experience && (
+                        <div className="mb-4">
+                          <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Pengalaman</h4>
+                          <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">{a.experience}</p>
+                        </div>
+                      )}
+
+                      {a.cv_url && (
+                        <div className="mb-4">
+                          <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">CV</h4>
+                          <a href={a.cv_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline text-sm">
+                            Lihat CV
+                          </a>
                         </div>
                       )}
                     </div>

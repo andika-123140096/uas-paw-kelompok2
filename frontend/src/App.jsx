@@ -21,12 +21,9 @@ function App(){
         <Header />
         <main className="min-h-screen w-full bg-white dark:bg-black text-black dark:text-white">
           <Routes>
-            {/* Public routes */}
             <Route path="/" element={<Landing />} />
             <Route path="/jobs" element={<JobsList />} />
             <Route path="/jobs/:id" element={<JobDetail />} />
-
-            {/* Auth routes - redirect to jobs if already logged in */}
             <Route path="/login" element={
               <ProtectedRoute requireAuth={false}>
                 <Login />
@@ -37,8 +34,6 @@ function App(){
                 <Register />
               </ProtectedRoute>
             } />
-
-            {/* Protected routes - require authentication */}
             <Route path="/create-job" element={
               <ProtectedRoute requireRole="employer">
                 <CreateJob />
@@ -69,8 +64,6 @@ function App(){
                 <Applicants />
               </ProtectedRoute>
             } />
-
-            {/* Catch all route */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>

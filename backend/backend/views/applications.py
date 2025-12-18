@@ -48,7 +48,7 @@ def get_job_applications(request):
     if not job:
         return {'error': 'Job not found or not yours'}, 404
     apps = request.dbsession.query(Application).options(joinedload(Application.seeker).joinedload(JobSeeker.user)).filter_by(job_id=job_id).all()
-    return [{'id': a.id, 'seeker_name': a.seeker.user.name, 'status': a.status, 'applied_date': str(a.applied_date)} for a in apps]
+    return [{'id': a.id, 'seeker_name': a.seeker.user.name, 'skills': a.seeker.skills, 'experience': a.seeker.experience, 'cv_url': a.seeker.cv_url, 'status': a.status, 'applied_date': str(a.applied_date)} for a in apps]
 
 @view_config(route_name='application_detail', request_method='PUT', renderer='json', permission='manage_applications')
 def update_application_status(request):

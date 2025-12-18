@@ -6,17 +6,14 @@ export default function ProtectedRoute({ children, requireAuth = true, requireRo
   const location = useLocation()
   const role = localStorage.getItem('role')
 
-  // Jika route butuh autentikasi tapi user belum login
   if (requireAuth && !token) {
     return <Navigate to="/login" state={{ from: location }} replace />
   }
 
-  // Jika route tidak butuh autentikasi tapi user sudah login
   if (!requireAuth && token) {
     return <Navigate to="/jobs" replace />
   }
 
-  // Jika route butuh role tertentu
   if (requireRole && role !== requireRole) {
     return <Navigate to="/jobs" replace />
   }

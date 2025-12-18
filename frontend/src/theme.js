@@ -9,7 +9,6 @@ export function initTheme() {
       document.documentElement.classList.remove('dark')
       return
     }
-    // No stored preference: use system preference
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       document.documentElement.classList.add('dark')
     }

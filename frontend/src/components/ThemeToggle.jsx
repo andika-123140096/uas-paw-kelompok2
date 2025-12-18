@@ -5,14 +5,12 @@ export default function ThemeToggle(){
   const [mounted, setMounted] = useState(false)
 
   useLayoutEffect(() => {
-    // Get initial theme synchronously
     const getInitialTheme = () => {
       try {
         const stored = localStorage.getItem('theme')
         if (stored === 'dark' || stored === 'light') {
           return stored
         }
-        // Check system preference
         const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         return systemPrefersDark ? 'dark' : 'light'
       } catch (e) {
@@ -22,8 +20,6 @@ export default function ThemeToggle(){
 
     const initialTheme = getInitialTheme()
     setTheme(initialTheme)
-
-    // Apply theme to document immediately using Tailwind v4 data-theme attribute
     document.documentElement.setAttribute('data-theme', initialTheme)
 
     setMounted(true)
@@ -32,18 +28,15 @@ export default function ThemeToggle(){
   const toggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark'
     setTheme(newTheme)
-
-    // Apply theme using Tailwind v4 data-theme attribute
     document.documentElement.setAttribute('data-theme', newTheme)
 
     try {
       localStorage.setItem('theme', newTheme)
     } catch (e) {
-      // Ignore localStorage errors
+      // 
     }
   }
 
-  // Don't render until mounted to prevent hydration mismatch
   if (!mounted) {
     return (
       <div className="p-2 rounded-lg">
