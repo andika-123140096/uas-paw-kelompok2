@@ -1,6 +1,23 @@
 import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 
 export default function Landing(){
+  const [placeholderIndex, setPlaceholderIndex] = useState(0)
+  const placeholders = [
+    "Software Engineer",
+    "Data Scientist",
+    "UI/UX Designer",
+    "Project Manager",
+    "Frontend Developer"
+  ]
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPlaceholderIndex((prev) => (prev + 1) % placeholders.length)
+    }, 2000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <div className="w-full">
       <section className="relative bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 pt-24 lg:pt-32 pb-12 lg:pb-16 overflow-hidden">
@@ -20,8 +37,9 @@ export default function Landing(){
             <form className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div>
                 <input
-                  className="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-xl bg-gray-50/80 dark:bg-gray-700/80 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 hover:shadow-md"
-                  placeholder="Posisi, kata kunci atau perusahaan"
+                  key={placeholderIndex}
+                  className="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-xl bg-gray-50/80 dark:bg-gray-700/80 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 hover:shadow-md animate-fade-in"
+                  placeholder={placeholders[placeholderIndex]}
                 />
               </div>
               <div>
