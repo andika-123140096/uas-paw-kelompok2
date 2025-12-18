@@ -47,23 +47,20 @@ export default function Landing(){
               </Link>
             </div>
           </div>
-        </div>
-      </section>
-      <section className="py-16 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-radial from-transparent via-white/10 to-transparent dark:from-transparent dark:via-gray-800/10 dark:to-transparent"></div>
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div className="p-6 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 dark:border-gray-700/50 hover:shadow-xl transition-all duration-300 transform hover:scale-105 animate-slide-up">
-              <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-400 dark:to-blue-600 bg-clip-text text-transparent mb-2">10,000+</div>
-              <div className="text-gray-600 dark:text-gray-300">Lowongan Aktif</div>
-            </div>
-            <div className="p-6 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 dark:border-gray-700/50 hover:shadow-xl transition-all duration-300 transform hover:scale-105 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-              <div className="text-4xl font-bold bg-gradient-to-r from-green-600 to-green-800 dark:from-green-400 dark:to-green-600 bg-clip-text text-transparent mb-2">5,000+</div>
-              <div className="text-gray-600 dark:text-gray-300">Perusahaan Partner</div>
-            </div>
-            <div className="p-6 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 dark:border-gray-700/50 hover:shadow-xl transition-all duration-300 transform hover:scale-105 animate-slide-up" style={{ animationDelay: '0.2s' }}>
-              <div className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 dark:from-purple-400 dark:to-purple-600 bg-clip-text text-transparent mb-2">50,000+</div>
-              <div className="text-gray-600 dark:text-gray-300">Kandidat Sukses</div>
+          <div className="mt-16 animate-slide-up" style={{ animationDelay: '0.6s' }}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+              <div className="p-6 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 dark:border-gray-700/50 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-400 dark:to-blue-600 bg-clip-text text-transparent mb-2">10,000+</div>
+                <div className="text-gray-600 dark:text-gray-300">Lowongan Aktif</div>
+              </div>
+              <div className="p-6 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 dark:border-gray-700/50 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                <div className="text-4xl font-bold bg-gradient-to-r from-green-600 to-green-800 dark:from-green-400 dark:to-green-600 bg-clip-text text-transparent mb-2">5,000+</div>
+                <div className="text-gray-600 dark:text-gray-300">Perusahaan Partner</div>
+              </div>
+              <div className="p-6 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 dark:border-gray-700/50 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                <div className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 dark:from-purple-400 dark:to-purple-600 bg-clip-text text-transparent mb-2">50,000+</div>
+                <div className="text-gray-600 dark:text-gray-300">Kandidat Sukses</div>
+              </div>
             </div>
           </div>
         </div>
