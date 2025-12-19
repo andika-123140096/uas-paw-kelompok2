@@ -9,17 +9,21 @@ export default function JobsList() {
   const [loading, setLoading] = useState(false);
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [locationIndex, setLocationIndex] = useState(0);
+  const [isTypingTitle, setIsTypingTitle] = useState(false);
+  const [isTypingLocation, setIsTypingLocation] = useState(false);
 
   const placeholders = ["Software Engineer", "Data Scientist", "UI/UX Designer", "Project Manager", "Frontend Developer"];
   const locationPlaceholders = ["Jakarta", "Bandung", "Surabaya", "Bali", "Yogyakarta"];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
-      setLocationIndex((prev) => (prev + 1) % locationPlaceholders.length);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
+    if (!isTypingTitle && !isTypingLocation) {
+      const interval = setInterval(() => {
+        setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
+        setLocationIndex((prev) => (prev + 1) % locationPlaceholders.length);
+      }, 2000);
+      return () => clearInterval(interval);
+    }
+  }, [isTypingTitle, isTypingLocation]);
 
   async function fetchJobs() {
     setErr(null);
@@ -68,6 +72,8 @@ export default function JobsList() {
                 className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 animate-fade-in"
                 value={query.title}
                 onChange={(e) => setQuery({ ...query, title: e.target.value })}
+                onFocus={() => setIsTypingTitle(true)}
+                onBlur={() => setIsTypingTitle(false)}
               />
             </div>
             <div>
@@ -78,6 +84,8 @@ export default function JobsList() {
                 className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 animate-fade-in"
                 value={query.location}
                 onChange={(e) => setQuery({ ...query, location: e.target.value })}
+                onFocus={() => setIsTypingLocation(true)}
+                onBlur={() => setIsTypingLocation(false)}
               />
             </div>
             <div>
