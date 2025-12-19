@@ -25,7 +25,7 @@ export default function Login() {
         authLogin(data.token, data.role)
         navigate(from, { replace: true })
       } else {
-        setErr('Login gagal: Token atau role tidak ditemukan')
+        setErr('Email atau password salah!')
       }
     } catch (e) {
       setErr(e.error || 'Terjadi kesalahan saat login')
