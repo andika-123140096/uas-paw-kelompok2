@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react'
 import { getProfile, updateProfile } from '../api'
 
 export default function Profile(){
-  const [profile, setProfile] = useState({ name:'', skills:'', experience:'', cv:'' })
+  const [profile, setProfile] = useState({ name:'', skills:'', experience:'', cv_url:'' })
   const [err, setErr] = useState(null)
   const [msg, setMsg] = useState(null)
 
   async function load(){
     setErr(null)
-    try{ const data = await getProfile(); setProfile({ name: data.name || '', skills: data.skills || '', experience: data.experience || '', cv: data.cv || '' }) } catch(e){ setErr(e.error || JSON.stringify(e)) }
+    try{ const data = await getProfile(); setProfile({ name: data.name || '', skills: data.skills || '', experience: data.experience || '', cv_url: data.cv_url || '' }) } catch(e){ setErr(e.error || JSON.stringify(e)) }
   }
 
   useEffect(()=>{ load() }, [])
@@ -75,8 +75,8 @@ export default function Profile(){
               <input
                 className="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-xl bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                 placeholder="https://drive.google.com/your-cv-link"
-                value={profile.cv}
-                onChange={e=>setProfile({...profile, cv:e.target.value})}
+                value={profile.cv_url}
+                onChange={e=>setProfile({...profile, cv_url:e.target.value})}
               />
             </div>
 
