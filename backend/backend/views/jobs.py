@@ -10,6 +10,13 @@ def list_jobs(request):
     salary_min = request.params.get('salary_min')
     salary_max = request.params.get('salary_max')
     type_ = request.params.get('type')
+    my_jobs = request.params.get('my_jobs')
+    
+    if my_jobs == 'true':
+        user_id = request.authenticated_userid
+        if not user_id:
+            return {'error': 'Unauthorized'}, 401
+        query = query.filter(Job.employer_id == int(user_id))
     
     if title:
         query = query.filter(Job.title.ilike(f'%{title}%'))

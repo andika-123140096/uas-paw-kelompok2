@@ -9,7 +9,7 @@ export default function MyJobs(){
 
   async function load(){
     setErr(null)
-    try{ const data = await getJobs(); setJobs(data || []) } catch(e){ setErr(e.error || JSON.stringify(e)) }
+    try{ const data = await getJobs({ my_jobs: 'true' }); setJobs(data || []) } catch(e){ setErr(e.error || JSON.stringify(e)) }
   }
 
   useEffect(()=>{ load() }, [])
