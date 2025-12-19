@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { getJobApplicants, updateApplicationStatus } from '../api'
+import { getJobApplicants, updateApplicationStatus, BASE_URL } from '../api'
 
 export default function Applicants(){
   const { job_id } = useParams()
@@ -195,7 +195,7 @@ export default function Applicants(){
                       {a.cv_url && (
                         <div className="mb-4">
                           <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">CV</h4>
-                          <a href={a.cv_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline text-sm">
+                          <a href={`${BASE_URL}${a.cv_url}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline text-sm">
                             Lihat CV
                           </a>
                         </div>

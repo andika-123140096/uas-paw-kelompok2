@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:6543'
+export const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:6543'
 
 function getToken() {
   return localStorage.getItem('token')
