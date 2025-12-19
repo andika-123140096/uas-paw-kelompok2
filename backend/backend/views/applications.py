@@ -36,7 +36,7 @@ def get_my_applications(request):
         return {'error': 'Unauthorized'}, 401
     seeker = request.dbsession.query(JobSeeker).filter_by(user_id=int(user_id)).first()
     apps = request.dbsession.query(Application).options(joinedload(Application.job)).filter_by(seeker_id=seeker.id).all()
-    return [{'id': a.id, 'job_title': a.job.title, 'status': a.status, 'applied_date': str(a.applied_date)} for a in apps]
+    return [{'id': a.id, 'job_title': a.job.title, 'status': a.status, 'applied_date': str(a.applied_date)} for a in apps if a.job]
 
 @view_config(route_name='job_applications', request_method='GET', renderer='json', permission='view_applications')
 def get_job_applications(request):

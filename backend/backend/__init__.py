@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 from pyramid.config import Configurator
 
 from .security import SecurityPolicy
@@ -39,6 +41,11 @@ def cors_tween_factory(handler, registry):
 
 
 def main(global_config, **settings):
+    load_dotenv()
+    # Override jwt.secret with JWT_SECRET from .env if available
+    if 'JWT_SECRET' in os.environ:
+        settings['jwt.secret'] = os.environ['JWT_SECRET']
+    
     with Configurator(settings=settings, root_factory='.resources.Root') as config:
         config.include('pyramid_jinja2')
         config.include('.routes')

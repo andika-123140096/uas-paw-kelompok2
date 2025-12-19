@@ -23,6 +23,7 @@ requires = [
     'psycopg2',
     'bcrypt',
     'PyJWT',
+    'python-dotenv',
 ]
 
 tests_require = [

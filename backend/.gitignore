@@ -18,5 +18,8 @@ Data*.fs*
 .sw?
 .DS_Store
 coverage
+.env
 test
 *.sqlite
+.env
+__pycache__

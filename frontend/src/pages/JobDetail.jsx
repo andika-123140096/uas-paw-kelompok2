@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { getJob, applyToJob } from '../api'
+import { getJob, applyToJob, getMyApplications } from '../api'
 import { useAuth } from '../components/AuthProvider'
 
 export default function JobDetail(){
@@ -8,12 +8,21 @@ export default function JobDetail(){
   const [job, setJob] = useState(null)
   const [err, setErr] = useState(null)
   const [msg, setMsg] = useState(null)
+  const [isApplied, setIsApplied] = useState(false)
   const [applying, setApplying] = useState(false)
   const navigate = useNavigate()
   const { isAuthenticated, isJobSeeker } = useAuth()
 
   async function load(){
-    try{ const data = await getJob(id); setJob(data); } catch(e){ setErr(e.error || 'Gagal memuat detail pekerjaan') }
+    try{ 
+      const data = await getJob(id); 
+      setJob(data); 
+      if (isAuthenticated && isJobSeeker) {
+        const apps = await getMyApplications();
+        const applied = apps.some(app => app.job_id === Number(id));
+        setIsApplied(applied);
+      }
+    } catch(e){ setErr(e.error || 'Gagal memuat detail pekerjaan') }
   }
 
   useEffect(()=>{ load() }, [id])
@@ -33,6 +42,7 @@ export default function JobDetail(){
     try{
       const data = await applyToJob(Number(id))
       setMsg(data.message || 'Lamaran berhasil dikirim')
+      setIsApplied(true)
     }catch(e){
       setErr(e.error || 'Gagal mengirim lamaran')
     } finally {
@@ -50,6 +60,16 @@ export default function JobDetail(){
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 py-8">
       <div className="max-w-4xl mx-auto px-6 lg:px-8">
+        <button
+          onClick={() => window.history.back()}
+          className="mb-6 inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200"
+        >
+          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Kembali
+        </button>
+
         <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/20 dark:border-gray-700/50 animate-slide-up">
           <div className="mb-6">
             <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-2">{job.title}</h1>
@@ -65,7 +85,7 @@ export default function JobDetail(){
                 <svg className="w-4 h-4 mr-1 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                 </svg>
-                {job.salary ? `Rp ${job.salary.toLocaleString()}` : 'Gaji Kompetitif'}
+                {job.salary ? `Rp ${parseInt(job.salary).toLocaleString('id-ID')}` : 'Gaji Kompetitif'}
               </span>
               <span className="flex items-center bg-purple-50 dark:bg-purple-900/20 px-3 py-1 rounded-full">
                 <svg className="w-4 h-4 mr-1 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -98,9 +118,9 @@ export default function JobDetail(){
 
           <div className="flex gap-4 animate-slide-up" style={{ animationDelay: '0.2s' }}>
             <button
-              onClick={apply}
+              onClick={isApplied ? () => {} : apply}
               className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-blue-400 disabled:to-blue-500 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl disabled:shadow-none transition-all duration-200 disabled:cursor-not-allowed transform hover:scale-105"
-              disabled={applying}
+              disabled={applying || isApplied}
             >
               {applying ? (
                 <div className="flex items-center justify-center">
@@ -111,14 +131,8 @@ export default function JobDetail(){
                   Mengirim Lamaran...
                 </div>
               ) : (
-                isAuthenticated ? 'Lamar Pekerjaan' : 'Login untuk Melamar'
+                isAuthenticated ? (isApplied ? 'Sudah Dilamar' : 'Lamar Pekerjaan') : 'Login untuk Melamar'
               )}
-            </button>
-            <button
-              onClick={() => window.history.back()}
-              className="px-8 py-4 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200 transform hover:scale-105"
-            >
-              Kembali
             </button>
           </div>
         </div>

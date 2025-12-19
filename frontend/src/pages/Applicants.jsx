@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { getJobApplicants, updateApplicationStatus } from '../api'
 
 export default function Applicants(){
   const { job_id } = useParams()
+  const navigate = useNavigate()
   const [apps, setApps] = useState([])
   const [err, setErr] = useState(null)
+  const [filterStatus, setFilterStatus] = useState('all')
+  const [searchTerm, setSearchTerm] = useState('')
 
   async function load(){
     setErr(null)
@@ -18,12 +21,74 @@ export default function Applicants(){
     try{ await updateApplicationStatus(id, status); load() } catch(e){ setErr(e.error || JSON.stringify(e)) }
   }
 
+  const filteredApps = apps.filter(a => {
+    const matchesStatus = filterStatus === 'all' || a.status?.toLowerCase() === filterStatus.toLowerCase()
+    const matchesSearch = !searchTerm || a.seeker_name?.toLowerCase().includes(searchTerm.toLowerCase())
+    return matchesStatus && matchesSearch
+  })
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-6 py-12">
       <div className="max-w-4xl mx-auto">
+        <button
+          onClick={() => navigate('/my-jobs')}
+          className="mb-6 inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200"
+        >
+          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Kembali ke Lowongan Saya
+        </button>
+
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Pelamar Lowongan</h1>
           <p className="text-gray-600 dark:text-gray-300">Kelola semua pelamar untuk lowongan kerja ini</p>
+        </div>
+
+        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl shadow-2xl p-6 mb-6 border border-white/20 dark:border-gray-700/50">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">{apps.length}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Total Pelamar</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-yellow-600">{apps.filter(a => a.status === 'pending').length}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Menunggu</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600">{apps.filter(a => a.status === 'shortlisted').length}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Shortlist</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-green-600">{apps.filter(a => a.status === 'accepted').length}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Diterima</div>
+            </div>
+          </div>
+
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1">
+              <input
+                type="text"
+                placeholder="Cari berdasarkan nama..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+              />
+            </div>
+            <div className="md:w-48">
+              <select
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              >
+                <option value="all">Semua Status</option>
+                <option value="pending">Menunggu</option>
+                <option value="shortlisted">Shortlist</option>
+                <option value="accepted">Diterima</option>
+                <option value="rejected">Ditolak</option>
+              </select>
+            </div>
+          </div>
         </div>
 
         {err && (
@@ -33,14 +98,14 @@ export default function Applicants(){
         )}
 
         <div className="space-y-6">
-          {apps.length === 0 ? (
+          {filteredApps.length === 0 ? (
             <div className="text-center py-12">
               <div className="text-gray-400 dark:text-gray-500 text-6xl mb-4">👥</div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Belum ada pelamar</h3>
               <p className="text-gray-600 dark:text-gray-300">Lowongan kerja ini belum memiliki pelamar</p>
             </div>
           ) : (
-            apps.map(a => {
+            filteredApps.map(a => {
               const getStatusColor = (status) => {
                 switch (status?.toLowerCase()) {
                   case 'pending':
@@ -137,42 +202,18 @@ export default function Applicants(){
                       )}
                     </div>
 
-                    <div className="flex flex-wrap gap-3 lg:flex-col lg:items-end">
-                      {a.status !== 'shortlisted' && (
-                        <button
-                          onClick={()=>setStatus(a.id, 'shortlisted')}
-                          className="inline-flex items-center px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-xl font-medium transition-colors duration-200"
-                        >
-                          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                          </svg>
-                          Shortlist
-                        </button>
-                      )}
-
-                      {a.status !== 'accepted' && (
-                        <button
-                          onClick={()=>setStatus(a.id, 'accepted')}
-                          className="inline-flex items-center px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-xl font-medium transition-colors duration-200"
-                        >
-                          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
-                          Terima
-                        </button>
-                      )}
-
-                      {a.status !== 'rejected' && (
-                        <button
-                          onClick={()=>setStatus(a.id, 'rejected')}
-                          className="inline-flex items-center px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl font-medium transition-colors duration-200"
-                        >
-                          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                          Tolak
-                        </button>
-                      )}
+                    <div className="lg:w-48">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Status Lamaran</label>
+                      <select
+                        value={a.status || 'pending'}
+                        onChange={(e) => setStatus(a.id, e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      >
+                        <option value="pending">Menunggu</option>
+                        <option value="shortlisted">Shortlist</option>
+                        <option value="accepted">Diterima</option>
+                        <option value="rejected">Ditolak</option>
+                      </select>
                     </div>
                   </div>
                 </div>
