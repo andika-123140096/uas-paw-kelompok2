@@ -40,11 +40,26 @@ cd backend
 python -m venv .venv
 pip install --upgrade pip setuptools
 pip install -e .
-alembic -c development.ini upgrade head
 ```
 
 6. Bikin database menggunakan pgAdmin4. Nama databasenya ```job_portal_system```
 ![pgAdmin Setup](./docs/images/pgAdmin.png)
+
+7. edit development.ini agar sesuai dengan konfigurasi database postgresqlmu.
+```
+sqlalchemy.url = postgresql://postgres:password_postgres_kamu@localhost:5432/job_portal_system
+```
+
+8. bikin .env di folder backend/.env
+```
+JWT_SECRET=your_jwt_secret_key_here
+```
+Ganti dengan secret key yg aman. Jadi secret keys di development.ini itu bakal dioverride sama ini.
+
+9. Run migrate setelah setup development.ini
+```bash
+alembic -c development.ini upgrade head
+```
 
 ## Run server di local
 
