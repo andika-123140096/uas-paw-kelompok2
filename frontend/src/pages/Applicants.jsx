@@ -1,37 +1,49 @@
-import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import { getJobApplicants, updateApplicationStatus, BASE_URL } from '../api'
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { getJobApplicants, updateApplicationStatus, BASE_URL } from "../api";
 
-export default function Applicants(){
-  const { job_id } = useParams()
-  const navigate = useNavigate()
-  const [apps, setApps] = useState([])
-  const [err, setErr] = useState(null)
-  const [filterStatus, setFilterStatus] = useState('all')
-  const [searchTerm, setSearchTerm] = useState('')
+export default function Applicants() {
+  const { job_id } = useParams();
+  const navigate = useNavigate();
+  const [apps, setApps] = useState([]);
+  const [err, setErr] = useState(null);
+  const [filterStatus, setFilterStatus] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
 
-  async function load(){
-    setErr(null)
-    try{ const data = await getJobApplicants(job_id); setApps(data || []) } catch(e){ setErr(e.error || JSON.stringify(e)) }
+  async function load() {
+    setErr(null);
+    try {
+      const data = await getJobApplicants(job_id);
+      setApps(data || []);
+    } catch (e) {
+      setErr(e.error || JSON.stringify(e));
+    }
   }
 
-  useEffect(()=>{ load() }, [job_id])
+  useEffect(() => {
+    load();
+  }, [job_id]);
 
-  async function setStatus(id, status){
-    try{ await updateApplicationStatus(id, status); load() } catch(e){ setErr(e.error || JSON.stringify(e)) }
+  async function setStatus(id, status) {
+    try {
+      await updateApplicationStatus(id, status);
+      load();
+    } catch (e) {
+      setErr(e.error || JSON.stringify(e));
+    }
   }
 
-  const filteredApps = apps.filter(a => {
-    const matchesStatus = filterStatus === 'all' || a.status?.toLowerCase() === filterStatus.toLowerCase()
-    const matchesSearch = !searchTerm || a.seeker_name?.toLowerCase().includes(searchTerm.toLowerCase())
-    return matchesStatus && matchesSearch
-  })
+  const filteredApps = apps.filter((a) => {
+    const matchesStatus = filterStatus === "all" || a.status?.toLowerCase() === filterStatus.toLowerCase();
+    const matchesSearch = !searchTerm || a.seeker_name?.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesStatus && matchesSearch;
+  });
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 px-6 py-12">
       <div className="max-w-4xl mx-auto">
         <button
-          onClick={() => navigate('/my-jobs')}
+          onClick={() => navigate("/my-jobs")}
           className="mb-6 inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200"
         >
           <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -52,15 +64,15 @@ export default function Applicants(){
               <div className="text-sm text-gray-600 dark:text-gray-400">Total Pelamar</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-yellow-600">{apps.filter(a => a.status === 'pending').length}</div>
+              <div className="text-2xl font-bold text-yellow-600">{apps.filter((a) => a.status === "pending").length}</div>
               <div className="text-sm text-gray-600 dark:text-gray-400">Menunggu</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-600">{apps.filter(a => a.status === 'shortlisted').length}</div>
+              <div className="text-2xl font-bold text-blue-600">{apps.filter((a) => a.status === "shortlisted").length}</div>
               <div className="text-sm text-gray-600 dark:text-gray-400">Shortlist</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-600">{apps.filter(a => a.status === 'accepted').length}</div>
+              <div className="text-2xl font-bold text-green-600">{apps.filter((a) => a.status === "accepted").length}</div>
               <div className="text-sm text-gray-600 dark:text-gray-400">Diterima</div>
             </div>
           </div>
@@ -91,11 +103,7 @@ export default function Applicants(){
           </div>
         </div>
 
-        {err && (
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-6">
-            {err}
-          </div>
-        )}
+        {err && <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-6">{err}</div>}
 
         <div className="space-y-6">
           {filteredApps.length === 0 ? (
@@ -105,34 +113,34 @@ export default function Applicants(){
               <p className="text-gray-600 dark:text-gray-300">Lowongan kerja ini belum memiliki pelamar</p>
             </div>
           ) : (
-            filteredApps.map(a => {
+            filteredApps.map((a) => {
               const getStatusColor = (status) => {
                 switch (status?.toLowerCase()) {
-                  case 'pending':
-                    return 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-400 border-yellow-200 dark:border-yellow-800';
-                  case 'shortlisted':
-                    return 'bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-400 border-blue-200 dark:border-blue-800';
-                  case 'accepted':
-                    return 'bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400 border-green-200 dark:border-green-800';
-                  case 'rejected':
-                    return 'bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-400 border-red-200 dark:border-red-800';
+                  case "pending":
+                    return "bg-yellow-100 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-400 border-yellow-200 dark:border-yellow-800";
+                  case "shortlisted":
+                    return "bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-400 border-blue-200 dark:border-blue-800";
+                  case "accepted":
+                    return "bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400 border-green-200 dark:border-green-800";
+                  case "rejected":
+                    return "bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-400 border-red-200 dark:border-red-800";
                   default:
-                    return 'bg-gray-100 dark:bg-gray-900/20 text-gray-800 dark:text-gray-400 border-gray-200 dark:border-gray-800';
+                    return "bg-gray-100 dark:bg-gray-900/20 text-gray-800 dark:text-gray-400 border-gray-200 dark:border-gray-800";
                 }
               };
 
               const getStatusIcon = (status) => {
                 switch (status?.toLowerCase()) {
-                  case 'pending':
-                    return '⏳';
-                  case 'shortlisted':
-                    return '⭐';
-                  case 'accepted':
-                    return '✅';
-                  case 'rejected':
-                    return '❌';
+                  case "pending":
+                    return "⏳";
+                  case "shortlisted":
+                    return "⭐";
+                  case "accepted":
+                    return "✅";
+                  case "rejected":
+                    return "❌";
                   default:
-                    return '📄';
+                    return "📄";
                 }
               };
 
@@ -142,25 +150,24 @@ export default function Applicants(){
                     <div className="flex-1 mb-6 lg:mb-0">
                       <div className="flex items-center gap-3 mb-3">
                         <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center">
-                          <span className="text-blue-600 dark:text-blue-400 font-semibold text-lg">
-                            {(a.seeker_name || 'U')[0].toUpperCase()}
-                          </span>
+                          <span className="text-blue-600 dark:text-blue-400 font-semibold text-lg">{(a.seeker_name || "U")[0].toUpperCase()}</span>
                         </div>
                         <div>
-                          <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                            {a.seeker_name}
-                          </h3>
+                          <h3 className="text-xl font-bold text-gray-900 dark:text-white">{a.seeker_name}</h3>
                           <div className="flex items-center gap-2 mt-1">
                             <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(a.status)}`}>
                               <span className="mr-1">{getStatusIcon(a.status)}</span>
-                              {a.status === 'pending' ? 'Menunggu' :
-                               a.status === 'shortlisted' ? 'Shortlist' :
-                               a.status === 'accepted' ? 'Diterima' :
-                               a.status === 'rejected' ? 'Ditolak' : a.status}
+                              {a.status === "pending"
+                                ? "Menunggu"
+                                : a.status === "shortlisted"
+                                  ? "Shortlist"
+                                  : a.status === "accepted"
+                                    ? "Diterima"
+                                    : a.status === "rejected"
+                                      ? "Ditolak"
+                                      : a.status}
                             </span>
-                            <span className="text-sm text-gray-500 dark:text-gray-400">
-                              Dilamar pada {new Date(a.applied_date || Date.now()).toLocaleDateString('id-ID')}
-                            </span>
+                            <span className="text-sm text-gray-500 dark:text-gray-400">Dilamar pada {new Date(a.applied_date || Date.now()).toLocaleDateString("id-ID")}</span>
                           </div>
                         </div>
                       </div>
@@ -176,7 +183,7 @@ export default function Applicants(){
                         <div className="mb-4">
                           <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Keterampilan</h4>
                           <div className="flex flex-wrap gap-2">
-                            {a.skills.split(',').map((skill, index) => (
+                            {a.skills.split(",").map((skill, index) => (
                               <span key={index} className="px-3 py-1 bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-400 rounded-full text-sm">
                                 {skill.trim()}
                               </span>
@@ -205,7 +212,7 @@ export default function Applicants(){
                     <div className="lg:w-48">
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Status Lamaran</label>
                       <select
-                        value={a.status || 'pending'}
+                        value={a.status || "pending"}
                         onChange={(e) => setStatus(a.id, e.target.value)}
                         className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       >
@@ -223,5 +230,5 @@ export default function Applicants(){
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -3,6 +3,7 @@
 This frontend is a minimal React + Vite app for the Job Portal backend documented in `backend/API.md`.
 
 Features implemented:
+
 - User authentication (register / login) for roles `job_seeker` and `employer`
 - Jobs listing with search & filters
 - Job detail and apply (job seeker)

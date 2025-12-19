@@ -35,11 +35,9 @@ class SecurityPolicy:
             return identity['userid']
 
     def remember(self, request, userid, **kw):
-        # For JWT, remember is not used since tokens are stateless
         return []
 
     def forget(self, request, **kw):
-        # For JWT, forget is not used
         return []
 
     def permits(self, request, context, permission):

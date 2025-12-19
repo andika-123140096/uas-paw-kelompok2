@@ -1,66 +1,75 @@
-import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import { getJob, applyToJob, getMyApplications } from '../api'
-import { useAuth } from '../components/AuthProvider'
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { getJob, applyToJob, getMyApplications } from "../api";
+import { useAuth } from "../components/AuthProvider";
 
-export default function JobDetail(){
-  const { id } = useParams()
-  const [job, setJob] = useState(null)
-  const [err, setErr] = useState(null)
-  const [msg, setMsg] = useState(null)
-  const [isApplied, setIsApplied] = useState(false)
-  const [applying, setApplying] = useState(false)
-  const navigate = useNavigate()
-  const { isAuthenticated, isJobSeeker } = useAuth()
+export default function JobDetail() {
+  const { id } = useParams();
+  const [job, setJob] = useState(null);
+  const [err, setErr] = useState(null);
+  const [msg, setMsg] = useState(null);
+  const [isApplied, setIsApplied] = useState(false);
+  const [applying, setApplying] = useState(false);
+  const navigate = useNavigate();
+  const { isAuthenticated, isJobSeeker } = useAuth();
 
-  async function load(){
-    try{ 
-      const data = await getJob(id); 
-      setJob(data); 
+  async function load() {
+    try {
+      const data = await getJob(id);
+      setJob(data);
       if (isAuthenticated && isJobSeeker) {
         try {
           const apps = await getMyApplications();
-          const applied = apps.some(app => app.job_id === Number(id));
+          const applied = apps.some((app) => app.job_id === Number(id));
           setIsApplied(applied);
         } catch (e) {
-          console.error('Failed to load applications:', e);
+          console.error("Failed to load applications:", e);
           setIsApplied(false);
         }
       }
-    } catch(e){ setErr(e.error || 'Gagal memuat detail pekerjaan') }
+    } catch (e) {
+      setErr(e.error || "Gagal memuat detail pekerjaan");
+    }
   }
 
-  useEffect(()=>{ load() }, [id])
+  useEffect(() => {
+    load();
+  }, [id]);
 
-  async function apply(){
+  async function apply() {
     if (!isAuthenticated) {
-      navigate('/login', { state: { from: `/jobs/${id}` } })
-      return
+      navigate("/login", { state: { from: `/jobs/${id}` } });
+      return;
     }
 
     if (!isJobSeeker) {
-      setErr('Hanya pencari kerja yang dapat melamar pekerjaan')
-      return
+      setErr("Hanya pencari kerja yang dapat melamar pekerjaan");
+      return;
     }
 
-    setErr(null); setMsg(null); setApplying(true)
-    try{
-      const data = await applyToJob(Number(id))
-      setMsg(data.message || 'Lamaran berhasil dikirim')
-      setIsApplied(true)
-    }catch(e){
-      setErr(e.error || 'Gagal mengirim lamaran')
+    setErr(null);
+    setMsg(null);
+    setApplying(true);
+    try {
+      const data = await applyToJob(Number(id));
+      setMsg(data.message || "Lamaran berhasil dikirim");
+      setIsApplied(true);
+    } catch (e) {
+      setErr(e.error || "Gagal mengirim lamaran");
     } finally {
-      setApplying(false)
+      setApplying(false);
     }
   }
 
-  if (!job) return <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
-    <div className="text-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-      <p className="text-gray-600 dark:text-gray-400">Memuat detail pekerjaan...</p>
-    </div>
-  </div>
+  if (!job)
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">Memuat detail pekerjaan...</p>
+        </div>
+      </div>
+    );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 py-8">
@@ -88,9 +97,14 @@ export default function JobDetail(){
               </span>
               <span className="flex items-center bg-green-50 dark:bg-green-900/20 px-3 py-1 rounded-full">
                 <svg className="w-4 h-4 mr-1 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
+                  />
                 </svg>
-                {job.salary ? `Rp ${parseInt(job.salary).toLocaleString('id-ID')}` : 'Gaji Kompetitif'}
+                {job.salary ? `Rp ${parseInt(job.salary).toLocaleString("id-ID")}` : "Gaji Kompetitif"}
               </span>
               <span className="flex items-center bg-purple-50 dark:bg-purple-900/20 px-3 py-1 rounded-full">
                 <svg className="w-4 h-4 mr-1 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -121,7 +135,7 @@ export default function JobDetail(){
             </div>
           )}
 
-          <div className="flex gap-4 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          <div className="flex gap-4 animate-slide-up" style={{ animationDelay: "0.2s" }}>
             <button
               onClick={isApplied ? () => {} : apply}
               className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-blue-400 disabled:to-blue-500 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl disabled:shadow-none transition-all duration-200 disabled:cursor-not-allowed transform hover:scale-105"
@@ -131,17 +145,27 @@ export default function JobDetail(){
                 <div className="flex items-center justify-center">
                   <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
                   </svg>
                   Mengirim Lamaran...
                 </div>
+              ) : isAuthenticated ? (
+                isApplied ? (
+                  "Sudah Dilamar"
+                ) : (
+                  "Lamar Pekerjaan"
+                )
               ) : (
-                isAuthenticated ? (isApplied ? 'Sudah Dilamar' : 'Lamar Pekerjaan') : 'Login untuk Melamar'
+                "Login untuk Melamar"
               )}
             </button>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }

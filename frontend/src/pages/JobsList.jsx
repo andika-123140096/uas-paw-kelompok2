@@ -1,55 +1,49 @@
-import { useState, useEffect } from 'react'
-import { getJobs } from '../api'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from "react";
+import { getJobs } from "../api";
+import { Link } from "react-router-dom";
 
 export default function JobsList() {
-  const [jobs, setJobs] = useState([])
-  const [query, setQuery] = useState({ title: '', location: '', salary_min: '', salary_max: '', type: '' })
-  const [err, setErr] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [placeholderIndex, setPlaceholderIndex] = useState(0)
-  const [locationIndex, setLocationIndex] = useState(0)
-  
-  const placeholders = [
-    "Software Engineer",
-    "Data Scientist",
-    "UI/UX Designer",
-    "Project Manager",
-    "Frontend Developer"
-  ]
-  const locationPlaceholders = [
-    "Jakarta",
-    "Bandung",
-    "Surabaya",
-    "Bali",
-    "Yogyakarta"
-  ]
+  const [jobs, setJobs] = useState([]);
+  const [query, setQuery] = useState({ title: "", location: "", salary_min: "", salary_max: "", type: "" });
+  const [err, setErr] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const [locationIndex, setLocationIndex] = useState(0);
+
+  const placeholders = ["Software Engineer", "Data Scientist", "UI/UX Designer", "Project Manager", "Frontend Developer"];
+  const locationPlaceholders = ["Jakarta", "Bandung", "Surabaya", "Bali", "Yogyakarta"];
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setPlaceholderIndex((prev) => (prev + 1) % placeholders.length)
-      setLocationIndex((prev) => (prev + 1) % locationPlaceholders.length)
-    }, 2000)
-    return () => clearInterval(interval)
-  }, [])
+      setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
+      setLocationIndex((prev) => (prev + 1) % locationPlaceholders.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
   async function fetchJobs() {
-    setErr(null)
-    setLoading(true)
+    setErr(null);
+    setLoading(true);
     try {
-      const params = {...query}
-      Object.keys(params).forEach(k => { if (!params[k]) delete params[k] })
-      const data = await getJobs(params)
-      setJobs(data || [])
-    } catch (e) { setErr(e.error || JSON.stringify(e)) }
-    setLoading(false)
+      const params = { ...query };
+      Object.keys(params).forEach((k) => {
+        if (!params[k]) delete params[k];
+      });
+      const data = await getJobs(params);
+      setJobs(data || []);
+    } catch (e) {
+      setErr(e.error || JSON.stringify(e));
+    }
+    setLoading(false);
   }
 
-  useEffect(()=>{ fetchJobs() }, [])
+  useEffect(() => {
+    fetchJobs();
+  }, []);
 
   async function search(e) {
-    e?.preventDefault()
-    await fetchJobs()
+    e?.preventDefault();
+    await fetchJobs();
   }
 
   return (
@@ -58,9 +52,7 @@ export default function JobsList() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
           <div className="text-center">
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Temukan Lowongan Pekerjaan</h1>
-            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              Jelajahi ribuan peluang karier dari perusahaan terkemuka di berbagai industri.
-            </p>
+            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Jelajahi ribuan peluang karier dari perusahaan terkemuka di berbagai industri.</p>
           </div>
         </div>
       </div>
@@ -75,7 +67,7 @@ export default function JobsList() {
                 placeholder={placeholders[placeholderIndex]}
                 className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 animate-fade-in"
                 value={query.title}
-                onChange={e=>setQuery({...query, title: e.target.value})}
+                onChange={(e) => setQuery({ ...query, title: e.target.value })}
               />
             </div>
             <div>
@@ -85,7 +77,7 @@ export default function JobsList() {
                 placeholder={locationPlaceholders[locationIndex]}
                 className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 animate-fade-in"
                 value={query.location}
-                onChange={e=>setQuery({...query, location: e.target.value})}
+                onChange={(e) => setQuery({ ...query, location: e.target.value })}
               />
             </div>
             <div>
@@ -93,7 +85,7 @@ export default function JobsList() {
               <select
                 className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                 value={query.type}
-                onChange={e=>setQuery({...query, type: e.target.value})}
+                onChange={(e) => setQuery({ ...query, type: e.target.value })}
               >
                 <option value="">Semua Tipe</option>
                 <option value="full-time">Full Time</option>
@@ -109,7 +101,7 @@ export default function JobsList() {
                 placeholder="5000000"
                 className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                 value={query.salary_min}
-                onChange={e=>setQuery({...query, salary_min: e.target.value})}
+                onChange={(e) => setQuery({ ...query, salary_min: e.target.value })}
               />
             </div>
             <div className="flex items-end">
@@ -120,10 +112,14 @@ export default function JobsList() {
                 {loading ? (
                   <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
                   </svg>
                 ) : (
-                  'Cari'
+                  "Cari"
                 )}
               </button>
             </div>
@@ -137,9 +133,7 @@ export default function JobsList() {
         )}
 
         <div className="mb-6 flex justify-between items-center animate-slide-up">
-          <p className="text-gray-600 dark:text-gray-300">
-            Menampilkan {jobs.length} lowongan pekerjaan
-          </p>
+          <p className="text-gray-600 dark:text-gray-300">Menampilkan {jobs.length} lowongan pekerjaan</p>
         </div>
 
         {loading ? (
@@ -160,8 +154,12 @@ export default function JobsList() {
           </div>
         ) : (
           <div className="space-y-6">
-            {jobs.map((job, index)=> (
-              <div key={job.id} className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-200/50 dark:border-gray-700/50 hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-1 animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
+            {jobs.map((job, index) => (
+              <div
+                key={job.id}
+                className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-200/50 dark:border-gray-700/50 hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-1 animate-slide-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                   <div className="flex-1 mb-4 lg:mb-0">
                     <Link to={`/jobs/${job.id}`} className="group">
@@ -172,16 +170,26 @@ export default function JobsList() {
                     <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-3">
                       <span className="flex items-center">
                         <svg className="w-4 h-4 mr-1 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                          />
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                         {job.location}
                       </span>
                       <span className="flex items-center">
                         <svg className="w-4 h-4 mr-1 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
+                          />
                         </svg>
-                        {job.salary ? `Rp ${parseInt(job.salary).toLocaleString('id-ID')}` : 'Gaji Kompetitif'}
+                        {job.salary ? `Rp ${parseInt(job.salary).toLocaleString("id-ID")}` : "Gaji Kompetitif"}
                       </span>
                       <span className="flex items-center">
                         <svg className="w-4 h-4 mr-1 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -190,9 +198,7 @@ export default function JobsList() {
                         {job.type}
                       </span>
                     </div>
-                    <p className="text-gray-700 dark:text-gray-300 line-clamp-3">
-                      {job.description?.slice(0, 500)}...
-                    </p>
+                    <p className="text-gray-700 dark:text-gray-300 line-clamp-3">{job.description?.slice(0, 500)}...</p>
                   </div>
                   <div className="flex flex-col gap-3 lg:ml-6">
                     <Link
@@ -219,5 +225,5 @@ export default function JobsList() {
         )}
       </div>
     </div>
-  )
+  );
 }
