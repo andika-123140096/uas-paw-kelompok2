@@ -6,6 +6,11 @@ Anggota Kelompok :
 - Abel Fortino (123140111)
 - Keira Lakeisha Fachra Fuady (123140142)
 
+## Link deployment
+
+Frontend: http://abiebkun.vercel.app/
+
+Backend: http://abiebkun.my.id/
 
 ## Setup project di local.
 1. Install python, nodejs, postgresql.
