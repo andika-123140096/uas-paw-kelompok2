@@ -35,7 +35,7 @@ cd backend
 python -m venv .venv
 pip install --upgrade pip setuptools
 pip install -e .
-alembic upgrade head
+alembic -c development.ini upgrade head
 ```
 
 6. Bikin database menggunakan pgAdmin4. Nama databasenya ```job_portal_system```
