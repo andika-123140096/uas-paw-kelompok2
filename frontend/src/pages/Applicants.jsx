@@ -28,7 +28,7 @@ export default function Applicants(){
   })
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-6 py-12">
+    <div className="min-h-screen bg-white dark:bg-gray-900 px-6 py-12">
       <div className="max-w-4xl mx-auto">
         <button
           onClick={() => navigate('/my-jobs')}
@@ -45,7 +45,7 @@ export default function Applicants(){
           <p className="text-gray-600 dark:text-gray-300">Kelola semua pelamar untuk lowongan kerja ini</p>
         </div>
 
-        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl shadow-2xl p-6 mb-6 border border-white/20 dark:border-gray-700/50">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 mb-6 border border-gray-200 dark:border-gray-700">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div className="text-center">
               <div className="text-2xl font-bold text-gray-900 dark:text-white">{apps.length}</div>
@@ -137,7 +137,7 @@ export default function Applicants(){
               };
 
               return (
-                <div key={a.id} className="bg-gray-50 dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-200 p-6 border border-gray-200 dark:border-gray-700">
+                <div key={a.id} className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
                   <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
                     <div className="flex-1 mb-6 lg:mb-0">
                       <div className="flex items-center gap-3 mb-3">

@@ -35,7 +35,7 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 px-6 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 px-6 pb-16 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-radial from-transparent via-blue-50/30 to-transparent dark:from-transparent dark:via-gray-800/10 dark:to-transparent"></div>
       <div className="absolute top-20 right-20 w-64 h-64 bg-blue-200/30 dark:bg-blue-900/5 rounded-full blur-3xl animate-float"></div>
       <div className="absolute bottom-20 left-20 w-48 h-48 bg-indigo-200/20 dark:bg-indigo-900/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>

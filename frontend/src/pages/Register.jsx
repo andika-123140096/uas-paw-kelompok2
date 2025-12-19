@@ -45,7 +45,7 @@ export default function Register() {
   }
 
   return (
-    <div className="min-h-screen flex items-start justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 px-6 pt-16 relative overflow-hidden">
+    <div className="min-h-screen flex items-start justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 px-6 pt-16 pb-16 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-radial from-transparent via-indigo-50/30 to-transparent dark:from-transparent dark:via-gray-800/10 dark:to-transparent"></div>
       <div className="absolute top-32 left-16 w-72 h-72 bg-indigo-200/20 dark:bg-indigo-900/5 rounded-full blur-3xl animate-float"></div>
       <div className="absolute bottom-32 right-16 w-56 h-56 bg-blue-200/20 dark:bg-blue-900/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '1.5s' }}></div>

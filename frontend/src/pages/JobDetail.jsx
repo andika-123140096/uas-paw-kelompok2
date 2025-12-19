@@ -18,9 +18,14 @@ export default function JobDetail(){
       const data = await getJob(id); 
       setJob(data); 
       if (isAuthenticated && isJobSeeker) {
-        const apps = await getMyApplications();
-        const applied = apps.some(app => app.job_id === Number(id));
-        setIsApplied(applied);
+        try {
+          const apps = await getMyApplications();
+          const applied = apps.some(app => app.job_id === Number(id));
+          setIsApplied(applied);
+        } catch (e) {
+          console.error('Failed to load applications:', e);
+          setIsApplied(false);
+        }
       }
     } catch(e){ setErr(e.error || 'Gagal memuat detail pekerjaan') }
   }

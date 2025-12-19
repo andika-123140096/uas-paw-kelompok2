@@ -190,8 +190,8 @@ export default function JobsList() {
                         {job.type}
                       </span>
                     </div>
-                    <p className="text-gray-700 dark:text-gray-300 line-clamp-2">
-                      {job.description?.slice(0, 200)}...
+                    <p className="text-gray-700 dark:text-gray-300 line-clamp-3">
+                      {job.description?.slice(0, 500)}...
                     </p>
                   </div>
                   <div className="flex flex-col gap-3 lg:ml-6">
