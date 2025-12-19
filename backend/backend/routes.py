@@ -1,5 +1,6 @@
 def includeme(config):
     config.add_static_view('static', 'static', cache_max_age=3600)
+    config.add_static_view('uploads', 'uploads', cache_max_age=3600)
     config.add_route('home', '/')
     config.add_route('register', '/register')
     config.add_route('login', '/login')
@@ -8,6 +9,7 @@ def includeme(config):
     config.add_route('create_job', '/create-job')
     config.add_route('job_detail', '/jobs/{id}')
     config.add_route('profile', '/profile')
+    config.add_route('upload_cv', '/upload-cv')
     config.add_route('applications', '/applications')
     config.add_route('my_applications', '/my-applications')
     config.add_route('job_applications', '/jobs/{job_id}/applications')

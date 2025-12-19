@@ -68,6 +68,36 @@ export async function updateProfile(payload) {
   return request('/profile', { method: 'PUT', body: JSON.stringify(payload) })
 }
 
+export async function uploadCV(file) {
+  const formData = new FormData()
+  formData.append('cv', file)
+  
+  const token = getToken()
+  const headers = {}
+  if (token) headers['Authorization'] = `Bearer ${token}`
+  
+  const res = await fetch(BASE_URL + '/upload-cv', {
+    method: 'POST',
+    headers,
+    body: formData
+  })
+  
+  const text = await res.text()
+  let data = null
+  try { data = text ? JSON.parse(text) : null } catch (e) { data = text }
+  
+  if (!res.ok) {
+    if (res.status === 401) {
+      localStorage.removeItem('token')
+      localStorage.removeItem('role')
+      window.location.href = '/login'
+      throw { error: 'Sesi Anda telah berakhir. Silakan login kembali.' }
+    }
+    throw data || { error: 'Request failed' }
+  }
+  return data
+}
+
 export async function applyToJob(job_id) {
   return request('/applications', { method: 'POST', body: JSON.stringify({ job_id }) })
 }
